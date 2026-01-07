@@ -35,13 +35,15 @@ export default class extends Controller {
     const now = new Date().getTime()
     const diff = Math.floor((now - start) / 1000)
 
-    const minutes = Math.floor(diff / 60)
+    const hours = Math.floor(diff / 3600)
+    const minutes = Math.floor((diff % 3600) / 60)
     const seconds = diff % 60
 
+    const displayHours = Math.max(0, hours)
     const displayMinutes = Math.max(0, minutes)
     const displaySeconds = Math.max(0, seconds)
 
-    this.timeTarget.textContent = `${this.pad(displayMinutes)}:${this.pad(displaySeconds)}`
+    this.timeTarget.textContent = `${this.pad(displayHours)}:${this.pad(displayMinutes)}:${this.pad(displaySeconds)}`
   }
 
   pad(num) {
