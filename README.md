@@ -33,7 +33,7 @@ If you want to run this on your own machine, here is exactly what you need to do
 
 1.  **Clone the repo**:
     ```bash
-    git clone https://github.com/yourusername/focus-buddy.git
+    git clone https://github.com/arsh/focus-buddy.git
     cd focus-buddy
     ```
 

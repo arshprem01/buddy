@@ -1,0 +1,42 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore storage (uploaded files in development and any SQLite databases).
+/storage/*
+!/storage/.keep
+/public/assets
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore various artifacts
+/coverage
+/spec/examples.txt
+/*.gem
+/doc
+/.yardoc
+
+# Ignore SQLite databases
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-*
+
+# Ignore all env files
+.env*
+.env
+
+# Ignore node_modules
+node_modules/
+/app/assets/builds/*
+!/app/assets/builds/.keep
