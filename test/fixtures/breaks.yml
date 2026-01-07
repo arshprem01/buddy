@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  study_session: one
+  break_type: MyString
+  duration: 1
+
+two:
+  study_session: two
+  break_type: MyString
+  duration: 1

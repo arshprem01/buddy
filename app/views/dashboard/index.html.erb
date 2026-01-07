@@ -1,0 +1,62 @@
+<div class="space-y-12">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <h1 class="text-4xl font-extrabold tracking-tight text-white">
+      Weekly Focus Dashboard
+    </h1>
+    <%= link_to "Start Assessment/Session", study_sessions_path, class: "bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-indigo-500/30 transition transform hover:scale-105" %>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Burnout Score -->
+    <div class="glass p-8 rounded-3xl relative overflow-hidden group">
+      <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+        </svg>
+      </div>
+      <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Burnout Score</h3>
+      <div class="flex items-center space-x-3">
+        <p class="text-4xl font-bold <%= @burnout_score == 'High' ? 'text-red-400' : (@burnout_score == 'Medium' ? 'text-yellow-400' : 'text-emerald-400') %>">
+          <%= @burnout_score %>
+        </p>
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full <%= @burnout_score == 'High' ? 'bg-red-400' : (@burnout_score == 'Medium' ? 'bg-yellow-400' : 'bg-emerald-400') %> opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 <%= @burnout_score == 'High' ? 'bg-red-500' : (@burnout_score == 'Medium' ? 'bg-yellow-500' : 'bg-emerald-500') %>"></span>
+        </span>
+      </div>
+    </div>
+    
+    <!-- Today's Focus -->
+    <div class="glass p-8 rounded-3xl relative overflow-hidden">
+      <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Today's Focus</h3>
+      <p class="text-5xl font-bold text-white">
+        <%= @today_stat&.total_study_minutes || 0 %> <span class="text-xl text-gray-400 font-normal">min</span>
+      </p>
+    </div>
+
+    <!-- Active Session -->
+    <div class="glass p-8 rounded-3xl relative overflow-hidden">
+      <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Active Session</h3>
+      <% if @active_session %>
+        <div class="mb-4">
+          <p class="text-emerald-400 font-bold text-2xl mb-1"><%= @active_session.subject %></p>
+          <p class="text-gray-300 text-sm animate-pulse">In Progress...</p>
+        </div>
+        <%= link_to "Continue Session", study_sessions_path, class: "inline-block w-full text-center bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/50 rounded-lg px-4 py-2 text-sm font-bold transition" %>
+      <% else %>
+        <p class="text-gray-500 italic">No active session</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="glass p-8 rounded-3xl">
+    <h3 class="text-xl font-bold mb-6 text-white">Weekly Study Trends</h3>
+    <!-- Assuming Chartkick is loaded. Using styles to invert colors for dark mode -->
+    <div class="w-full" style="filter: invert(1) hue-rotate(180deg);">
+      <%= column_chart @weekly_study_minutes, colors: ["#fbbf24"], height: "350px", library: { scales: { x: { ticks: { color: '#000' } }, y: { ticks: { color: '#000' } } } } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="max-w-xl mx-auto pt-10">
+  <h1 class="text-3xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+    Focus Timer
+  </h1>
+
+  <% if @active_session %>
+    <div class="glass p-10 rounded-3xl text-center shadow-2xl shadow-indigo-500/10"
+         data-controller="timer"
+         data-timer-start-time-value="<%= @active_session.start_time.iso8601 %>">
+      
+      <h2 class="text-gray-400 uppercase tracking-widest text-xs font-semibold mb-4">Focusing on</h2>
+      <p class="text-4xl font-bold text-white mb-10"><%= @active_session.subject %></p>
+      
+      <div class="relative">
+         <div class="text-8xl font-mono font-bold text-white mb-10 tracking-wider" style="font-feature-settings: 'tnum';" data-timer-target="time">
+            00:00
+         </div>
+      </div>
+
+      <div class="flex justify-center space-x-4">
+        <%= button_to "Finish Session", finish_study_session_path(@active_session), class: "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white px-10 py-4 rounded-2xl font-bold shadow-lg shadow-emerald-500/30 transition transform hover:scale-105 active:scale-95" %>
+      </div>
+    </div>
+    
+  <% else %>
+    <div class="glass p-10 rounded-3xl shadow-xl">
+      <%= form_with(model: StudySession.new, local: true, class: "space-y-6") do |f| %>
+        <div>
+          <%= f.label :subject, "What is your focus goal?", class: "block text-sm font-medium text-gray-300 mb-2" %>
+          <%= f.text_field :subject, class: "w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition", placeholder: "e.g. Linear Algebra, World History" %>
+        </div>
+        
+        <%= f.submit "Start Focus Session", class: "w-full bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-4 rounded-xl font-bold text-lg shadow-lg shadow-indigo-500/30 transition transform hover:scale-[1.02] cursor-pointer" %>
+      <% end %>
+    </div>
+    
+    <div class="mt-12">
+      <h3 class="text-lg font-bold mb-6 text-gray-400 uppercase tracking-wider text-sm">Recent Sessions</h3>
+      <div class="space-y-3">
+        <% @study_sessions.each do |session| %>
+          <div class="glass p-4 rounded-xl flex justify-between items-center group hover:bg-slate-800/50 transition">
+            <div class="flex flex-col">
+              <span class="font-bold text-gray-200 text-lg group-hover:text-indigo-300 transition"><%= session.subject %></span>
+              <span class="text-gray-500 text-xs"><%= session.created_at.strftime("%b %d, %H:%M") %></span>
+            </div>
+            <% if session.duration %>
+              <span class="bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full text-sm font-mono"><%= session.duration %> min</span>
+            <% else %>
+              <span class="text-red-400 text-sm">Incomplete</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  date: 2026-01-07
+  total_study_minutes: 1
+  burnout_score: MyString
+
+two:
+  user: two
+  date: 2026-01-07
+  total_study_minutes: 1
+  burnout_score: MyString

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "FocusBuddy" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/reading.png" type="image/png">
+    <link rel="apple-touch-icon" href="/reading.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <!-- Load Chart.js and Chartkick via CDN for stability -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartkick@5.0.1/dist/chartkick.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: '#0f172a', // Slate 900
+              surface: '#1e293b', // Slate 800
+              primary: '#6366f1', // Indigo 500
+              secondary: '#10b981', // Emerald 500
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+      }
+      .glass {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen">
+    <main class="container mx-auto py-10 px-5">
+      <nav class="flex justify-between items-center mb-10 glass p-4 rounded-2xl">
+        <div class="flex items-center">
+          <a href="/" class="flex items-center space-x-3 hover:opacity-80 transition">
+            <img src="/reading.png" class="h-8 w-8" alt="Logo">
+            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">FocusBuddy</span>
+          </a>
+        </div>
+        <div class="flex items-center">
+          <% if user_signed_in? %>
+            <span class="hidden md:inline text-gray-400 text-sm mr-4"><%= current_user.email %></span>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "px-4 py-2 text-xs font-bold text-white bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-lg transition" %>
+          <% else %>
+            <%= link_to "Login", new_user_session_path, class: "px-4 py-2 text-xs font-bold text-white bg-indigo-500 hover:bg-indigo-600 rounded-lg transition" %>
+          <% end %>
+        </div>
+      </nav>
+      <%= yield %>
+    </main>
+  </body>
+</html>
