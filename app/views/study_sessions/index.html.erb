@@ -17,6 +17,20 @@
          </div>
       </div>
 
+      <div class="mb-8 flex justify-center">
+        <button type="button" 
+                data-action="timer#toggleAudio" 
+                data-timer-target="muteButton"
+                class="flex items-center space-x-2 bg-slate-800/50 hover:bg-slate-700/50 text-indigo-300 px-4 py-2 rounded-full transition text-sm font-medium border border-indigo-500/30">
+          <span data-timer-target="muteIcon">🔊</span>
+          <span data-timer-target="muteText">Nature Sounds On</span>
+        </button>
+        <audio data-timer-target="audio" loop>
+          <source src="https://actions.google.com/sounds/v1/nature/rain_and_noise.ogg" type="audio/ogg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
       <div class="flex justify-center space-x-4">
         <%= button_to "Finish Session", finish_study_session_path(@active_session), class: "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white px-10 py-4 rounded-2xl font-bold shadow-lg shadow-emerald-500/30 transition transform hover:scale-105 active:scale-95" %>
       </div>

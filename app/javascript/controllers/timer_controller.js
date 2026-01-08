@@ -1,12 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["time"]
+  static targets = ["time", "audio", "muteButton", "muteIcon", "muteText"]
   static values = {
     startTime: String
   }
 
   connect() {
+    this.isMuted = false
     if (this.hasStartTimeValue) {
       this.startTimer()
     }
@@ -19,6 +20,7 @@ export default class extends Controller {
   startTimer() {
     this.stopTimer()
     this.update()
+    this.playAudio()
     this.timer = setInterval(() => {
       this.update()
     }, 1000)
@@ -27,6 +29,35 @@ export default class extends Controller {
   stopTimer() {
     if (this.timer) {
       clearInterval(this.timer)
+    }
+    this.pauseAudio()
+  }
+
+  toggleAudio() {
+    this.isMuted = !this.isMuted
+
+    if (this.isMuted) {
+      this.pauseAudio()
+      this.muteIconTarget.textContent = "🔇"
+      this.muteTextTarget.textContent = "Nature Sounds Off"
+      this.muteButtonTarget.classList.add("opacity-50")
+    } else {
+      this.playAudio()
+      this.muteIconTarget.textContent = "🔊"
+      this.muteTextTarget.textContent = "Nature Sounds On"
+      this.muteButtonTarget.classList.remove("opacity-50")
+    }
+  }
+
+  playAudio() {
+    if (!this.isMuted && this.hasAudioTarget) {
+      this.audioTarget.play().catch(e => console.log("Audio play failed (interaction required):", e))
+    }
+  }
+
+  pauseAudio() {
+    if (this.hasAudioTarget) {
+      this.audioTarget.pause()
     }
   }
 
