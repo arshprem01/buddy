@@ -16,9 +16,9 @@ I built this because tracking study hours manually is tedious, and existing time
 
 ## 🛠️ Tech Stack
 
-This project is a modern **Ruby on Rails 7** application leveraging the power of **Hotwire** for a single-page-app feel without the complexity of a heavy frontend framework.
+This project is a modern **Ruby on Rails 8** application leveraging the power of **Hotwire** for a single-page-app feel without the complexity of a heavy frontend framework.
 
-- **Backend**: Ruby on Rails 7.1
+- **Backend**: Ruby on Rails 8.1
 - **Database**: SQLite (optimized for local development).
 - **Frontend**: 
   - **Tailwind CSS**: For that crisp, custom styling.
